@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPost, getPosts, relatedPosts } from "@/lib/blog";
+import { getPost, relatedPosts } from "@/lib/blog";
 import { renderMarkdown } from "@/lib/mdx";
 import { getAuthor, taxonomySlug } from "@/content/blog/schema";
 import { services } from "@/content/services";
@@ -15,10 +15,8 @@ import { PostCard } from "@/components/blog/post-card";
 import { FAQAccordion } from "@/components/faq-accordion";
 import { FAQSchema } from "@/components/faq-schema";
 import { CTABanner } from "@/components/cta-banner";
-export const dynamicParams = false;
-export async function generateStaticParams() {
-  return (await getPosts()).map(({ slug }) => ({ slug }));
-}
+// Posts live in the database and change at runtime via /admin, so this route
+// renders per request (getPosts() calls connection()); unknown slugs 404 in postFrom.
 async function postFrom(params: Promise<{ slug: string }>) {
   const { slug } = await params;
   const post = await getPost(slug);
