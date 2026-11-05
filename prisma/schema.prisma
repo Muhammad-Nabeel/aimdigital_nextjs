@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model BlogPost {
+  id          String   @id @db.Uuid
+  slug        String   @unique
+  // Validated frontmatter (content/blog/schema.ts); parsed again on every read.
+  metadata    Json
+  content     String
+  draft       Boolean
+  publishedAt DateTime @map("published_at")
+  createdAt   DateTime @map("created_at")
+  modifiedAt  DateTime @map("modified_at")
+  version     Int      @default(1)
+
+  @@index([draft, publishedAt(sort: Desc)], map: "blog_published")
+  @@map("blog_posts")
+}
+
+// Single-admin tables: the id = 1 rows enforce one account and one setup key.
+model AdminUser {
+  id           Int      @id
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @map("created_at")
+
+  @@map("admin_users")
+}
+
+model AdminSession {
+  tokenHash String   @id @map("token_hash")
+  expiresAt DateTime @map("expires_at")
+
+  @@map("admin_sessions")
+}
+
+model AdminSetup {
+  id        Int      @id
+  tokenHash String   @map("token_hash")
+  expiresAt DateTime @map("expires_at")
+
+  @@map("admin_setup")
+}
+
+model AdminRateLimit {
+  bucket   String   @id
+  attempts Int
+  resetsAt DateTime @map("resets_at")
+
+  @@map("admin_rate_limits")
+}

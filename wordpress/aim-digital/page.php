@@ -1,0 +1,1 @@
+<?php get_header(); ?><section class="section"><div class="wrap"><article class="entry-content"><?php while(have_posts()):the_post(); ?><p class="eyebrow">AIM Digital</p><h1><?php the_title(); ?></h1><?php if(has_post_thumbnail())the_post_thumbnail('large'); ?><div class="content"><?php the_content(); ?></div><?php endwhile; ?></article></div></section><?php get_footer(); ?>

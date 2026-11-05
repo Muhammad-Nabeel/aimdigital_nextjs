@@ -1,0 +1,212 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --muted: #eff2ff;
+  --muted-foreground: #526078;
+  --primary: #005ee9;
+  --primary-hover: #004bbd;
+  --brand-blue: #0067ff;
+  --action: #005ee9;
+  --action-hover: #004bbd;
+  --border: #dce3ee;
+}
+.dark {
+  --background: #0b1220;
+  --foreground: #eef3fc;
+  --card: #111d30;
+  --muted: #152238;
+  --muted-foreground: #aab8ce;
+  --primary: #70aaff;
+  --primary-hover: #377fe6;
+  --border: #293950;
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-border: var(--border);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-manrope);
+}
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), sans-serif;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-manrope), sans-serif;
+  }
+  a,
+  button,
+  summary {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  ::selection {
+    background: #0067ff;
+    color: white;
+  }
+}
+@layer components {
+  .eyebrow {
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .section-title {
+    margin-top: 1rem;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+  }
+  .hero-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--border) 25%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--border) 25%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 64px 64px;
+  }
+  .orb-glow {
+    background: radial-gradient(circle, #0067ff55, transparent 70%);
+    filter: blur(45px);
+  }
+  .logo-window {
+    width: 174px;
+    height: 54px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    border-radius: 5px;
+    background: white;
+    flex-shrink: 0;
+  }
+  .logo-image {
+    position: absolute;
+    max-width: none;
+    width: 400px;
+    height: auto;
+    left: -110px;
+    top: -46px;
+  }
+  .skip-link {
+    position: fixed;
+    top: -100px;
+    left: 1rem;
+    z-index: 100;
+    border-radius: 8px;
+    background: var(--foreground);
+    color: var(--background);
+    padding: 12px 20px;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .article-body {
+    line-height: 1.85;
+    color: var(--muted-foreground);
+  }
+  .article-body h2 {
+    margin: 2.5rem 0 1rem;
+    font-size: 1.65rem;
+    font-weight: 600;
+    color: var(--foreground);
+    letter-spacing: -0.025em;
+    scroll-margin-top: 7rem;
+  }
+  .article-body h3 {
+    margin: 1.75rem 0 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--foreground);
+    scroll-margin-top: 7rem;
+  }
+  .article-body p {
+    margin: 1rem 0;
+  }
+  .article-body a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .article-body strong {
+    color: var(--foreground);
+  }
+  .article-body ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+  }
+  .article-body ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+  }
+  .article-body li {
+    margin: 0.5rem 0;
+  }
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+  }
+  .article-body th,
+  .article-body td {
+    border: 1px solid var(--border);
+    padding: 0.8rem;
+    text-align: left;
+  }
+  .article-body th {
+    background: var(--muted);
+    color: var(--foreground);
+  }
+  .article-body pre {
+    overflow-x: auto;
+    padding: 1.25rem;
+    background: var(--muted);
+    border-radius: 1rem;
+  }
+  .article-body blockquote {
+    border-left: 3px solid var(--primary);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+  }
+}
